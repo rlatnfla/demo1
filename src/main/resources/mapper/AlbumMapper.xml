@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.mapper.AlbumMyBatisMapper">
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO album (title, image_url, artist_id)
+    VALUES (#{title}, #{imageUrl}, #{artistId})
+  </insert>
+
+  <update id="update">
+    UPDATE album
+    SET title = #{title},
+        image_url = #{imageUrl},
+        artist_id = #{artistId}
+    WHERE id = #{id}
+  </update>
+
+  <select id="findById" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.AlbumMyBatisEntity">
+    SELECT album.id,
+           album.title,
+           album.image_url AS imageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM album
+    JOIN artist ON album.artist_id = artist.id
+    WHERE album.id = #{id}
+  </select>
+
+  <select id="findAllByTitle" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.AlbumMyBatisEntity">
+    SELECT album.id,
+           album.title,
+           album.image_url AS imageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM album
+    JOIN artist ON album.artist_id = artist.id
+    WHERE album.title = #{title}
+  </select>
+
+  <select id="findAllByArtistId" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.AlbumMyBatisEntity">
+    SELECT album.id,
+           album.title,
+           album.image_url AS imageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM album
+    JOIN artist ON album.artist_id = artist.id
+    WHERE album.artist_id = #{artistId}
+  </select>
+
+</mapper>
