@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.mapper.TrackMyBatisMapper">
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO track (title, image_url, album_id, artist_id)
+    VALUES (#{title}, #{imageUrl}, #{albumId}, #{artistId})
+  </insert>
+
+  <update id="update">
+    UPDATE track
+    SET title = #{title},
+        image_url = #{imageUrl},
+        album_id = #{albumId},
+        artist_id = #{artistId}
+    WHERE id = #{id}
+  </update>
+
+  <select id="findById" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.TrackMyBatisEntity">
+    SELECT track.id,
+           track.title,
+           track.image_url AS imageUrl,
+           album.id AS albumId,
+           album.title AS albumTitle,
+           album.image_url AS albumImageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM track
+    JOIN album on track.album_id = album.id
+    JOIN artist on track.artist_id = artist.id
+    WHERE track.id = #{id}
+  </select>
+
+  <select id="findAllByTitle" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.TrackMyBatisEntity">
+    SELECT track.id,
+           track.title,
+           track.image_url AS imageUrl,
+           album.id AS albumId,
+           album.title AS albumTitle,
+           album.image_url AS albumImageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM track
+    JOIN album on track.album_id = album.id
+    JOIN artist on track.artist_id = artist.id
+    WHERE track.title = #{title}
+  </select>
+
+  <select id="findAllByAlbumId" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.TrackMyBatisEntity">
+    SELECT track.id,
+           track.title,
+           track.image_url AS imageUrl,
+           album.id AS albumId,
+           album.title AS albumTitle,
+           album.image_url AS albumImageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM track
+    JOIN album on track.album_id = album.id
+    JOIN artist on track.artist_id = artist.id
+    WHERE track.album_id = #{albumId}
+  </select>
+
+  <select id="findAllByArtistId" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.TrackMyBatisEntity">
+    SELECT track.id,
+           track.title,
+           track.image_url AS imageUrl,
+           album.id AS albumId,
+           album.title AS albumTitle,
+           album.image_url AS albumImageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM track
+    JOIN album on track.album_id = album.id
+    JOIN artist on track.artist_id = artist.id
+    WHERE track.artist_id = #{artistId}
+  </select>
+
+</mapper>

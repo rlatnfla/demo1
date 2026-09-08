@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: demo1
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo_db
+    username: rlatnfla
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  # DB 컬럼명(artist_id)을 자바 객체 필드명(artistId)으로 카멜케이스 자동 변환
+  configuration:
+    map-underscore-to-camel-case: true
+
+# MyBatis 실행 SQL 콘솔에서 확인하기 위한 로그설정
+logging:
+  level:
+    com.rlatnfla.demo1.coremusic.infrastructure.mybatis: debug
