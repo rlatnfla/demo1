@@ -5,52 +5,42 @@
 
 <mapper namespace="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.mapper.AlbumMyBatisMapper">
 
+  <sql id="selectAlbumWithArtist">
+    SELECT album.id,
+           album.title,
+           album.image_url AS imageUrl,
+           artist.id AS artistId,
+           artist.name AS artistName,
+           artist.image_url AS artistImageUrl
+    FROM album
+    JOIN artist ON album.artist_id = artist.id
+  </sql>
+
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO album (title, image_url, artist_id)
-    VALUES (#{title}, #{imageUrl}, #{artistId})
+    VALUES (#{entity.title}, #{entity.imageUrl}, #{entity.artistId})
   </insert>
 
   <update id="update">
     UPDATE album
-    SET title = #{title},
-        image_url = #{imageUrl},
-        artist_id = #{artistId}
-    WHERE id = #{id}
+    SET title = #{entity.title},
+        image_url = #{entity.imageUrl},
+        artist_id = #{entity.artistId}
+    WHERE id = #{entity.id}
   </update>
 
   <select id="findById" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.AlbumMyBatisEntity">
-    SELECT album.id,
-           album.title,
-           album.image_url AS imageUrl,
-           artist.id AS artistId,
-           artist.name AS artistName,
-           artist.image_url AS artistImageUrl
-    FROM album
-    JOIN artist ON album.artist_id = artist.id
+    <include refid="selectAlbumWithArtist"/>
     WHERE album.id = #{id}
   </select>
 
   <select id="findAllByTitle" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.AlbumMyBatisEntity">
-    SELECT album.id,
-           album.title,
-           album.image_url AS imageUrl,
-           artist.id AS artistId,
-           artist.name AS artistName,
-           artist.image_url AS artistImageUrl
-    FROM album
-    JOIN artist ON album.artist_id = artist.id
+    <include refid="selectAlbumWithArtist"/>
     WHERE album.title = #{title}
   </select>
 
   <select id="findAllByArtistId" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.AlbumMyBatisEntity">
-    SELECT album.id,
-           album.title,
-           album.image_url AS imageUrl,
-           artist.id AS artistId,
-           artist.name AS artistName,
-           artist.image_url AS artistImageUrl
-    FROM album
-    JOIN artist ON album.artist_id = artist.id
+    <include refid="selectAlbumWithArtist"/>
     WHERE album.artist_id = #{artistId}
   </select>
 
