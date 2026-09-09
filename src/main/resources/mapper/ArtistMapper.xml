@@ -5,27 +5,30 @@
 
 <mapper namespace="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.mapper.ArtistMyBatisMapper">
 
+  <sql id="selectArtist">
+    SELECT id, name, image_url
+    FROM artist
+  </sql>
+
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO artist (name, image_url)
-    VALUES (#{name}, #{imageUrl})
+    VALUES (#{entity.name}, #{entity.imageUrl})
   </insert>
 
   <update id="update">
     UPDATE artist
-    SET name = #{name},
-        image_url = #{imageUrl}
-    WHERE id = #{id}
+    SET name = #{entity.name},
+        image_url = #{entity.imageUrl}
+    WHERE id = #{entity.id}
   </update>
 
   <select id="findById" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.ArtistMyBatisEntity">
-    SELECT id, name, image_url
-    FROM artist
+    <include refid="selectArtist"/>
     WHERE id = #{id}
   </select>
 
   <select id="findAllByName" resultType="com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.ArtistMyBatisEntity">
-    SELECT id, name, image_url
-    FROM artist
+    <include refid="selectArtist"/>
     WHERE name = #{name}
   </select>
 

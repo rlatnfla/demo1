@@ -4,13 +4,14 @@ import com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.ArtistMyBatisE
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ArtistMyBatisMapper {
 
-    void insert(ArtistMyBatisEntity entity);
+    void insert(@Param("entity") ArtistMyBatisEntity entity);
 
-    void update(ArtistMyBatisEntity entity);
+    void update(@Param("entity") ArtistMyBatisEntity entity);
 
     Optional<ArtistMyBatisEntity> findById(Long id);
 

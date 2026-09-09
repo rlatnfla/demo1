@@ -4,13 +4,14 @@ import com.rlatnfla.demo1.coremusic.infrastructure.mybatis.entity.TrackMyBatisEn
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface TrackMyBatisMapper {
 
-    void insert(TrackMyBatisEntity entity);
+    void insert(@Param("entity") TrackMyBatisEntity entity);
 
-    void update(TrackMyBatisEntity entity);
+    void update(@Param("entity") TrackMyBatisEntity entity);
 
     Optional<TrackMyBatisEntity> findById(Long id);
 
